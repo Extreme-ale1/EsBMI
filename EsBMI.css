@@ -1,0 +1,179 @@
+
+/* Fa comprendere padding e bordo nella larghezza totale */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    /* Fa sì che la pagina sia alta almeno quanto lo schermo */
+    min-height: 100vh;
+
+    padding: 40px 60px;
+
+    /* Attiva Flexbox, cioè un sistema che permette di disporre gli elementi in modo ordinato. */
+    display: flex;
+
+    /* Mette gli elementi uno sotto l'altro, in colonna */
+    flex-direction: column;
+
+    /* Centra gli elementi lungo la direzione principale */
+    justify-content: center;
+
+    /* Centra gli elementi lungo la direzione opposta */
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+    background: #F1F3F5;
+    color: #1F2328;
+}
+
+h1 {
+    font-size: 32px;
+    margin: 0 0 24px;
+    text-align: center;
+}
+
+.card {
+    width: 360px;
+
+    /* Impedisce alla card di superare la larghezza del contenitore */
+    max-width: 100%;
+
+    padding: 24px;
+    background: #FFFFFF;
+
+    /* Arrotonda gli angoli della card */
+    border-radius: 12px;
+
+    /* Aggiunge un'ombra leggera alla card */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+
+    /* Crea spazio tra i campi del form */
+    gap: 16px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #D0D7DE;
+    border-radius: 6px;
+
+    /* Usa lo stesso font dell'elemento contenitore */
+    font: inherit;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #1F2328;
+    color: #F1F3F5;
+
+    /* Usa lo stesso font dell'elemento contenitore */
+    font: inherit;
+
+    /* Mostra una mano quando si passa sul pulsante */
+    cursor: pointer;
+}
+
+button:hover {
+    background: #343A40;
+}
+
+.risultato {
+    text-align: center;
+}
+
+.risultato p {
+    margin: 12px 0;
+}
+
+.bmi-numero {
+    font-size: 48px;
+
+    /* Rende il testo più spesso */
+    font-weight: bold;
+
+    margin: 16px 0;
+}
+
+.fascia {
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* Stile della fascia sottopeso */
+.sottopeso {
+    background: #E3EEF9;
+    border: 3px solid #2F6FB3;
+}
+
+.sottopeso .fascia {
+    color: #2F6FB3;
+}
+
+/* Stile della fascia normopeso */
+.normopeso {
+    background: #E3F4E6;
+    border: 3px solid #256D34;
+}
+
+.normopeso .fascia {
+    color: #256D34;
+}
+
+/* Stile della fascia sovrappeso */
+.sovrappeso {
+    background: #FCEBD7;
+    border: 3px solid #9A4F06;
+}
+
+.sovrappeso .fascia {
+    color: #9A4F06;
+}
+
+/* Stile della fascia obesità */
+.obesita {
+    background: #FBE2E2;
+    border: 3px solid #B32D2D;
+}
+
+.obesita .fascia {
+    color: #B32D2D;
+}
+
+.link-nuovo {
+    display: inline-block;
+    margin-top: 20px;
+    color: #1F2328;
+}
+
+/* Applica queste regole agli schermi larghi al massimo 480px */
+@media (max-width: 480px) {
+    body {
+        padding: 24px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}

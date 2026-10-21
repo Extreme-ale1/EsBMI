@@ -1,0 +1,62 @@
+Realizza un calcolatore BMI completo usando esattamente tre file: form.html, bmi.php e style.css. Usa codice semplice e chiaro, adatto a un progetto scolastico.
+
+form.html
+
+- Titolo <h1>: “Calcolatore BMI”.
+
+- Form con method="post" e action="bmi.php".
+
+- Tre campi obbligatori: Nome (text), Peso in kg (number, con decimali ammessi) e Altezza in cm (number).
+
+- Pulsante “Calcola”.
+
+
+bmi.php
+
+- Leggi nome, peso e altezza tramite $_POST.
+
+- Calcola il BMI con la formula: peso / (altezza in metri)².
+
+- Mostra una sola card con nome, BMI arrotondato a 2 decimali con round($bmi, 2) e fascia in maiuscolo.
+
+- La card deve avere la classe card e quella della fascia, ad esempio <div class="card normopeso">.
+
+- Sotto la card inserisci il link “Calcola di nuovo” verso form.html.
+
+- Usa if, else if ed else per assegnare $fascia e $classe:
+
+- BMI inferiore a 18,5: SOTTOPESO, classe sottopeso.
+
+- Da 18,5 a meno di 25: NORMOPESO, classe normopeso.
+
+- Da 25 a meno di 30: SOVRAPPESO, classe sovrappeso.
+
+- Da 30 in poi: OBESITÀ, classe obesita.
+
+
+
+style.css
+
+- Sfondo pagina #F1F3F5, testo #1F2328, font Arial sans-serif.
+
+- Contenuto centrato orizzontalmente e verticalmente.
+
+- Card bianca larga 360px, padding 24px, angoli arrotondati 12px e ombra leggera.
+
+- Pulsante con sfondo #1F2328, testo bianco, angoli arrotondati 8px e larghezza piena.
+
+- Le quattro classi devono avere questi colori e un bordo di 3px:
+
+	- .sottopeso: sfondo #E3EEF9, bordo #2F6FB3.
+
+	- .normopeso: sfondo #E3F4E6, bordo #256D34.
+
+	- .sovrappeso: sfondo #FCEBD7, bordo #9A4F06.
+
+	- .obesita: sfondo #FBE2E2, bordo #B32D2D.
+
+- La scritta della fascia deve usare il colore del bordo, essere in grassetto e in maiuscolo.
+
+- Le etichette devono stare sopra gli input, che occupano tutta la larghezza. Usa spaziature ordinate e adatta la pagina agli schermi piccoli.
+
+Fornisci il codice completo di tutti e tre i file, separatamente e nell'ordine indicato, senza omettere requisiti.

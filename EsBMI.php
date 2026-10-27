@@ -1,10 +1,24 @@
 
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "GET"){
+    header("Location: form.html");
+    exit;
+}
+
 $nome = $_POST["nome"];
 $peso = $_POST["peso"];
 $altezza = $_POST["altezza"];
 
-// Converte l'altezza da centimetri a metri
+// Validazione Dati
+$nomeValido = ($nome != "");
+$pesoValido = (is_numeric($peso) && $peso > 0);
+$altezzaValida = (is_numeric($altezza) && $altezza > 0);
+
+if (!$nomeValido || !$pesoValido || !$altezzaValida){
+    exit("Err: inserisci dei dati validi!!!");
+}
+
+// Converte l'altezza da centimetri a metri     
 $altezza = $altezza / 100;
 
 // Calcola il BMI
@@ -27,6 +41,17 @@ if ($bmi < 18.5) {
 
 // Arrotonda il BMI a due cifre decimali
 $bmi = round($bmi, 2);
+
+// Salvataggio dello storico in log.csv
+$data = date("d/m/Y");
+$ora = date("H:i:s");
+$ip = $_SERVER["REMOTE_ADDR"];
+
+$riga = array($data, $ora, $ip, $nome, $altezza * 100; $peso, $bmi, $classe);
+
+$file = fopen("log.csv", "a");
+fputcsv($file, $riga);
+fclose($file);
 ?>
 
 <!DOCTYPE html>

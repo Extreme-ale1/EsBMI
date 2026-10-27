@@ -1,57 +1,117 @@
 
 <?php
+
+// Controllo di come è stata aperta la pagina PHP
 if ($_SERVER["REQUEST_METHOD"] == "GET"){
-    header("Location: form.html");
-    exit;
+    header("Location: EsBMI.html");     // rimanda l'utente alla pagina EsBMI.html
+    exit;   // interrompe l'esecuzione del PHP
 }
 
+
+// Recupero Dati form
 $nome = $_POST["nome"];
 $peso = $_POST["peso"];
 $altezza = $_POST["altezza"];
 
-// Validazione Dati
-$nomeValido = ($nome != "");
-$pesoValido = (is_numeric($peso) && $peso > 0);
-$altezzaValida = (is_numeric($altezza) && $altezza > 0);
 
-if (!$nomeValido || !$pesoValido || !$altezzaValida){
-    exit("Err: inserisci dei dati validi!!!");
-}
-
-// Converte l'altezza da centimetri a metri     
-$altezza = $altezza / 100;
-
-// Calcola il BMI
-$bmi = $peso / ($altezza * $altezza);
-
-// Controlla in quale fascia rientra il BMI
-if ($bmi < 18.5) {
-    $fascia = "SOTTOPESO";
-    $classe = "sottopeso";
-} else if ($bmi < 25) {
-    $fascia = "NORMOPESO";
-    $classe = "normopeso";
-} else if ($bmi < 30) {
-    $fascia = "SOVRAPPESO";
-    $classe = "sovrappeso";
+// Validazione dei dati
+if ($nome != "") {
+    $nomeValido = true;
 } else {
-    $fascia = "OBESITÀ";
-    $classe = "obesita";
+    $nomeValido = false;
 }
 
-// Arrotonda il BMI a due cifre decimali
-$bmi = round($bmi, 2);
+if (is_numeric($peso) && $peso > 0) {
+    $pesoValido = true;
+} else {
+    $pesoValido = false;
+}
 
-// Salvataggio dello storico in log.csv
-$data = date("d/m/Y");
-$ora = date("H:i:s");
+if (is_numeric($altezza) && $altezza > 0) {
+    $altezzaValida = true;
+} else {
+    $altezzaValida = false;
+}
+
+
+// Registrazione dei dati
+$nomeLog = "NOT_VALID";
+$pesoLog = "NOT_VALID";
+$altezzaLog = "NOT_VALID";
+
+$bmiLog = "NOT_VALID";
+$classeLog = "NOT_VALID";
+
+if ($nomeValido == true) {
+    $nomeLog = $nome;   // copia il nome nella variabile destinata al registro
+                        // Se il nome non è valido, $nomeLog rimane "NOT_VALID"
+}
+
+if ($pesoValido == true) {
+    $pesoLog = $peso;
+}
+
+if ($altezzaValida == true) {
+    $altezzaLog = $altezza;
+}
+
+
+// Calcola il BMI (soltanto se i dati sono validi)
+if ($nomeValido == true && $pesoValido == true && $altezzaValida == true) {
+
+    // Converte l'altezza da centimetri a metri
+    $altezza = $altezza / 100;
+
+    // Calcola il BMI
+    $bmi = $peso / ($altezza * $altezza);
+
+    // Controlla in quale fascia rientra il BMI
+    if ($bmi < 18.5) {
+        $fascia = "SOTTOPESO";
+        $classe = "sottopeso";      // nome tecnico utilizzato nel CSS per applicare lo stile corrispondente
+    } else if ($bmi < 25) {
+        $fascia = "NORMOPESO";
+        $classe = "normopeso";
+    } else if ($bmi < 30) {
+        $fascia = "SOVRAPPESO";
+        $classe = "sovrappeso";
+    } else {
+        $fascia = "OBESITÀ";
+        $classe = "obesita";
+    }
+
+    // Arrotonda il BMI a due cifre decimali (ES: 21.224 diventa 21.22)
+    $bmi = round($bmi, 2);
+
+    // Copia il BMI calcolato e la classe individuata nelle variabili destinate al registro CSV
+    $bmiLog = $bmi;
+    $classeLog = $classe;
+}
+
+
+// Salvataggio dello storico (delle operazioni effettuate) in log.csv
+// Recupero della data e dell'ora
+$data = date("d/m/Y");      // ES: 27/10/2026
+$ora = date("H:i:s");       // ES: 18:35:20
+
+// Recupero dell'indirizzo IP (del dispositivo o della connessione che ha effettuato la richiesta al server)
 $ip = $_SERVER["REMOTE_ADDR"];
 
-$riga = array($data, $ora, $ip, $nome, $altezza * 100; $peso, $bmi, $classe);
+// Creazione Array (che serve a raggruppare i dati che verranno scritti nel file)
+$riga = array($data, $ora, $ip, $nomeLog, $altezzaLog, $pesoLog, $bmiLog, $classeLog);
 
+// Apertura File
 $file = fopen("log.csv", "a");
+
+// Scrittura dei valori dell'array nel file CSV (ES RIGA: 27/10/2026,18:35:20,127.0.0.1,Luca,175,65,21.22,normopeso)
 fputcsv($file, $riga);
+
 fclose($file);
+
+// Controlla se i dati sono validi
+if ($nomeValido == false || $pesoValido == false || $altezzaValida == false) {
+    exit("Errore: inserisci dei dati validi!");     // interrompe e mostra un msg di errore
+}
 ?>
 
 <!DOCTYPE html>
